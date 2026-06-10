@@ -168,9 +168,13 @@ class Enemy {
     const dx = player.x - this.x;
     const dy = player.y - this.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
+    const absDy = Math.abs(dy);
 
-    // State transitions
-    if (player.isAlive() && dist < this.detectRange && this.detectCooldown <= 0) {
+    // State transitions — only chase/attack if player is at similar height
+    // (prevents enemies walking off platforms chasing a player far above/below)
+    const canEngage = absDy < 150;
+
+    if (player.isAlive() && dist < this.detectRange && this.detectCooldown <= 0 && canEngage) {
       if (dist < this.attackRange) {
         this.state = 'attack';
       } else {

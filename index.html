@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Realms of the Fallen Kingdom — Fantasy RPG</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Supabase client (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -17,9 +19,37 @@
       <h1 class="game-title">Realms of the<br>Fallen Kingdom</h1>
       <div class="menu-buttons">
         <button id="btnStart" class="menu-btn">⚔️ Start Game</button>
+        <button id="btnLeaderboard" class="menu-btn">🏆 Leaderboard</button>
         <button id="btnSettings" class="menu-btn">⚙️ Settings</button>
         <button id="btnExit" class="menu-btn">🚪 Exit</button>
       </div>
+      <div class="menu-footer">
+        <span id="onlineStatus">💾 Local scores</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI Overlay: Name Entry -->
+  <div id="nameEntry" class="overlay hidden">
+    <div class="menu-box">
+      <h2>Enter Thy Name, Warrior</h2>
+      <input type="text" id="playerNameInput" class="name-input" 
+             placeholder="Your name..." maxlength="20" autocomplete="off">
+      <p class="name-hint">Leave blank to play as "Anonymous"</p>
+      <button id="btnConfirmName" class="menu-btn">⚔️ Enter the Realm</button>
+      <button id="btnSkipName" class="menu-btn secondary">👤 Play as Guest</button>
+    </div>
+  </div>
+
+  <!-- UI Overlay: Leaderboard -->
+  <div id="leaderboardScreen" class="overlay hidden">
+    <div class="menu-box leaderboard-box">
+      <h2 class="leaderboard-title">🏆 Hall of Heroes</h2>
+      <p class="leaderboard-subtitle">The greatest warriors of the realm</p>
+      <div id="leaderboardList" class="leaderboard-list">
+        <p class="loading-text">Loading scores...</p>
+      </div>
+      <button id="btnCloseLeaderboard" class="menu-btn">← Back</button>
     </div>
   </div>
 
@@ -58,18 +88,18 @@
           <div class="health-bar-bg"><div id="playerHealthBar" class="health-bar-fill"></div></div>
           <span id="playerHealthText">100/100</span>
         </div>
+        <span id="playerNameHud" class="player-name-hud"></span>
       </div>
       <div class="hud-center">
         <span id="levelName">Level 1</span>
+        <span id="enemiesRemaining" class="enemies-remaining"></span>
       </div>
       <div class="hud-right">
         <span class="score-label">⭐ Score</span>
         <span id="scoreDisplay">0</span>
       </div>
     </div>
-    <!-- Enemy health bars rendered on canvas -->
     <div id="enemyHealthBars"></div>
-    <!-- Controls hint -->
     <div class="controls-hint">
       <span>🠜 🠞 Move</span> <span>⬆ Jump</span> <span>J Attack</span> <span>P Pause</span>
     </div>
@@ -111,8 +141,11 @@
       <h2 class="victory-title">🏆 All Done! 🏆</h2>
       <p id="victorySubtitle">You conquered the Fallen Kingdom!</p>
       <p id="victoryScore"></p>
-      <button id="btnPlayAgain" class="menu-btn">🔄 Play Again</button>
-      <button id="btnQuitVictory" class="menu-btn">🏠 Main Menu</button>
+      <div id="victoryActions">
+        <button id="btnPlayAgain" class="menu-btn">🔄 Play Again</button>
+        <button id="btnViewLeaderboard" class="menu-btn">🏆 Leaderboard</button>
+        <button id="btnQuitVictory" class="menu-btn">🏠 Main Menu</button>
+      </div>
     </div>
   </div>
 
@@ -122,6 +155,7 @@
   <script src="js/enemy.js"></script>
   <script src="js/level.js"></script>
   <script src="js/combat.js"></script>
+  <script src="js/supabase.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/main.js"></script>
 </body>

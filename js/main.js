@@ -91,7 +91,41 @@
     // --- Button handlers ---
     document.getElementById('btnStart').addEventListener('click', () => {
       audio.resumeContext();
+      // Show name entry instead of starting directly
+      ui.showNameEntry();
+    });
+
+    // Name entry
+    document.getElementById('btnConfirmName').addEventListener('click', () => {
+      audio.resumeContext();
+      const name = ui.getEnteredName();
+      setPlayerName(name);
       startNewGame();
+    });
+
+    document.getElementById('btnSkipName').addEventListener('click', () => {
+      audio.resumeContext();
+      setPlayerName('Anonymous');
+      startNewGame();
+    });
+
+    // Allow Enter key on name input
+    document.getElementById('playerNameInput').addEventListener('keydown', (e) => {
+      if (e.code === 'Enter') {
+        const name = ui.getEnteredName();
+        setPlayerName(name);
+        startNewGame();
+      }
+    });
+
+    // Leaderboard
+    document.getElementById('btnLeaderboard').addEventListener('click', () => {
+      audio.resumeContext();
+      ui.showLeaderboard();
+    });
+
+    document.getElementById('btnCloseLeaderboard').addEventListener('click', () => {
+      ui.hideLeaderboard();
     });
 
     document.getElementById('btnSettings').addEventListener('click', () => {
@@ -105,7 +139,6 @@
     });
 
     document.getElementById('btnExit').addEventListener('click', () => {
-      // In browser: close tab or show goodbye
       if (window.close) window.close();
       else alert('Thanks for playing! Close this tab to exit.');
     });
@@ -118,6 +151,9 @@
     document.getElementById('btnQuitGameOver').addEventListener('click', quitToMenu);
 
     document.getElementById('btnPlayAgain').addEventListener('click', startNewGame);
+    document.getElementById('btnViewLeaderboard').addEventListener('click', () => {
+      ui.showLeaderboard();
+    });
     document.getElementById('btnQuitVictory').addEventListener('click', quitToMenu);
 
     // Settings handlers
@@ -180,10 +216,17 @@
     if (nextIdx === -1 || level.config.isFinalLevel) {
       // Game complete — victory!
       gameState = STATE.VICTORY;
-      ui.showVictory(player.score, player.kills, level.config.number, level.config.name);
+      ui.showVictory(player.score, player.kills, level.config.number, level.config.name, difficulty);
       audio.stopMusic();
       audio.playMusic('theme', true);
       player.health = player.maxHealth;  // Full heal for display
+
+      // Auto-show leaderboard after 3 seconds so the player sees their rank
+      setTimeout(() => {
+        if (gameState === STATE.VICTORY) {
+          ui.showLeaderboard();
+        }
+      }, 3000);
       return;
     }
 

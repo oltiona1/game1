@@ -275,10 +275,10 @@ class LevelManager {
         for (const plat of this.platforms) {
           enemy.resolvePlatformCollision(plat);
         }
-        // Clamp to ground
-        if (enemy.y > 1000) {
-          enemy.y = 1000;
-          enemy.vy = 0;
+        // Kill enemies that fall out of bounds (same as player fall death)
+        if (enemy.y > this.config.height + 100) {
+          enemy.health = 0;
+          audio.playSfx('enemyDeath');
         }
       }
     }
