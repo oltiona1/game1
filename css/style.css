@@ -1,0 +1,341 @@
+/* ============================================================
+   Realms of the Fallen Kingdom — Styles
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0a0a0f;
+  overflow: hidden;
+  font-family: 'Cinzel', 'MedievalSharp', serif;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+/* ============================================================
+   Overlay System
+   ============================================================ */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  transition: opacity 0.4s ease;
+}
+
+.overlay.hidden { display: none; }
+
+.menu-box {
+  background: linear-gradient(135deg, #1a1020 0%, #0d0712 50%, #1a0a1a 100%);
+  border: 2px solid #8b6914;
+  border-radius: 12px;
+  padding: 48px 64px;
+  text-align: center;
+  box-shadow:
+    0 0 60px rgba(139, 105, 20, 0.3),
+    0 0 120px rgba(80, 20, 80, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Title
+   ============================================================ */
+.game-title {
+  font-family: 'Cinzel', serif;
+  font-size: 52px;
+  font-weight: 900;
+  background: linear-gradient(180deg, #f0d060 0%, #c4942a 40%, #8b6914 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 8px rgba(200, 150, 50, 0.6));
+  margin-bottom: 48px;
+  line-height: 1.2;
+  letter-spacing: 3px;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.menu-btn {
+  display: block;
+  width: 280px;
+  margin: 12px auto;
+  padding: 14px 32px;
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #e8d5a0;
+  background: linear-gradient(180deg, #2a1a30 0%, #1a0a20 100%);
+  border: 2px solid #8b6914;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 2px;
+}
+
+.menu-btn:hover {
+  background: linear-gradient(180deg, #3a2a40 0%, #2a1a30 100%);
+  border-color: #c4942a;
+  color: #f0d060;
+  transform: scale(1.04);
+  box-shadow: 0 0 24px rgba(200, 150, 50, 0.3);
+}
+
+.menu-btn:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   Settings
+   ============================================================ */
+.settings-group {
+  margin: 20px 0;
+  text-align: left;
+  color: #c0a860;
+}
+
+.settings-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+.settings-group input[type="range"] {
+  width: 100%;
+  accent-color: #c4942a;
+}
+
+.settings-group select {
+  width: 100%;
+  padding: 8px;
+  background: #1a1020;
+  color: #e8d5a0;
+  border: 1px solid #8b6914;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+}
+
+/* ============================================================
+   HUD (in-game)
+   ============================================================ */
+#hud { pointer-events: none; }
+
+#hud > * { pointer-events: auto; }
+
+.hud-top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 24px;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+
+.hud-left, .hud-right { min-width: 200px; }
+.hud-center {
+  text-align: center;
+  color: #f0d060;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: 0 0 12px rgba(200, 150, 50, 0.5);
+}
+
+.hud-right {
+  text-align: right;
+  color: #f0d060;
+  font-size: 20px;
+}
+
+.score-label { display: block; font-size: 12px; letter-spacing: 2px; opacity: 0.7; }
+
+.health-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.health-label { color: #e04040; font-size: 14px; }
+
+.health-bar-bg {
+  width: 200px; height: 14px;
+  background: #1a0a0a;
+  border: 1px solid #5a2020;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.health-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #40a040 0%, #80e040 100%);
+  border-radius: 7px;
+  transition: width 0.3s ease;
+}
+
+#playerHealthText { color: #d0d0d0; font-size: 13px; }
+
+/* Controls hint */
+.controls-hint {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 24px;
+  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  letter-spacing: 1px;
+  z-index: 50;
+}
+
+/* ============================================================
+   Enemy health bar (rendered in HTML for positioning)
+   ============================================================ */
+.enemy-hp-container {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+
+.enemy-hp-bg {
+  width: 48px; height: 6px;
+  background: #1a0a0a;
+  border: 1px solid #5a2020;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.enemy-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e04040 0%, #ff6060 100%);
+  border-radius: 3px;
+  transition: width 0.2s ease;
+}
+
+.enemy-hp-name {
+  color: #cc4444;
+  font-size: 10px;
+  text-align: center;
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Special screens
+   ============================================================ */
+.victory-title {
+  font-size: 48px;
+  background: linear-gradient(180deg, #ffd700 0%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+.game-over-title {
+  font-size: 48px;
+  color: #cc3333;
+  text-shadow: 0 0 20px rgba(200, 50, 50, 0.5);
+  margin-bottom: 16px;
+}
+
+.victory-box p, #gameOverScreen p {
+  color: #c0a860;
+  font-size: 18px;
+  margin: 8px 0;
+  letter-spacing: 1px;
+}
+
+/* Celebration particles on victory */
+.victory-box {
+  position: relative;
+  overflow: hidden;
+  animation: victoryGlow 2s ease-in-out infinite;
+}
+
+@keyframes victoryGlow {
+  0%, 100% { box-shadow: 0 0 60px rgba(255,215,0,0.3), 0 0 120px rgba(200,150,50,0.2); }
+  50%      { box-shadow: 0 0 100px rgba(255,215,0,0.5), 0 0 200px rgba(200,150,50,0.4); }
+}
+
+.victory-box::before {
+  content: '';
+  position: absolute;
+  top: -100%; left: -50%;
+  width: 200%; height: 200%;
+  background:
+    radial-gradient(2px 2px at 20% 30%, gold, transparent),
+    radial-gradient(2px 2px at 40% 70%, gold, transparent),
+    radial-gradient(2px 2px at 60% 20%, gold, transparent),
+    radial-gradient(2px 2px at 80% 60%, gold, transparent),
+    radial-gradient(3px 3px at 10% 80%, #ffd700, transparent),
+    radial-gradient(3px 3px at 70% 10%, #ffd700, transparent),
+    radial-gradient(2px 2px at 90% 40%, gold, transparent),
+    radial-gradient(2px 2px at 30% 90%, gold, transparent);
+  background-size: 200% 200%;
+  animation: confetti 4s linear infinite;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes confetti {
+  0%   { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-60%) rotate(360deg); }
+}
+
+.transition-box {
+  animation: fadeInUp 0.6s ease;
+}
+
+#transitionTitle {
+  font-size: 40px;
+  color: #f0d060;
+  margin-bottom: 12px;
+}
+
+#transitionSubtitle {
+  color: #c0a860;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+#transitionStats {
+  color: #a09070;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 768px) {
+  .menu-box { padding: 32px 24px; }
+  .game-title { font-size: 32px; }
+  .menu-btn { width: 220px; font-size: 16px; padding: 10px 20px; }
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realms of the Fallen Kingdom — Fantasy RPG</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Game Canvas -->
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- UI Overlay: Main Menu -->
+  <div id="mainMenu" class="overlay">
+    <div class="menu-box">
+      <h1 class="game-title">Realms of the<br>Fallen Kingdom</h1>
+      <div class="menu-buttons">
+        <button id="btnStart" class="menu-btn">⚔️ Start Game</button>
+        <button id="btnSettings" class="menu-btn">⚙️ Settings</button>
+        <button id="btnExit" class="menu-btn">🚪 Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI Overlay: Settings -->
+  <div id="settingsMenu" class="overlay hidden">
+    <div class="menu-box">
+      <h2>Settings</h2>
+      <div class="settings-group">
+        <label>Music Volume</label>
+        <input type="range" id="musicVol" min="0" max="100" value="50">
+        <span id="musicVolLabel">50%</span>
+      </div>
+      <div class="settings-group">
+        <label>SFX Volume</label>
+        <input type="range" id="sfxVol" min="0" max="100" value="70">
+        <span id="sfxVolLabel">70%</span>
+      </div>
+      <div class="settings-group">
+        <label>Difficulty</label>
+        <select id="difficultySelect">
+          <option value="easy">Easy</option>
+          <option value="normal" selected>Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <button id="btnBackFromSettings" class="menu-btn">← Back</button>
+    </div>
+  </div>
+
+  <!-- UI Overlay: HUD (in-game) -->
+  <div id="hud" class="hidden">
+    <div class="hud-top">
+      <div class="hud-left">
+        <div class="health-bar-container">
+          <div class="health-label">❤️ HP</div>
+          <div class="health-bar-bg"><div id="playerHealthBar" class="health-bar-fill"></div></div>
+          <span id="playerHealthText">100/100</span>
+        </div>
+      </div>
+      <div class="hud-center">
+        <span id="levelName">Level 1</span>
+      </div>
+      <div class="hud-right">
+        <span class="score-label">⭐ Score</span>
+        <span id="scoreDisplay">0</span>
+      </div>
+    </div>
+    <!-- Enemy health bars rendered on canvas -->
+    <div id="enemyHealthBars"></div>
+    <!-- Controls hint -->
+    <div class="controls-hint">
+      <span>🠜 🠞 Move</span> <span>⬆ Jump</span> <span>J Attack</span> <span>P Pause</span>
+    </div>
+  </div>
+
+  <!-- UI Overlay: Pause -->
+  <div id="pauseMenu" class="overlay hidden">
+    <div class="menu-box">
+      <h2>Paused</h2>
+      <button id="btnResume" class="menu-btn">▶️ Resume</button>
+      <button id="btnRestart" class="menu-btn">🔄 Restart Level</button>
+      <button id="btnQuit" class="menu-btn">🏠 Main Menu</button>
+    </div>
+  </div>
+
+  <!-- UI Overlay: Level Transition -->
+  <div id="levelTransition" class="overlay hidden">
+    <div class="menu-box transition-box">
+      <h2 id="transitionTitle">Level Complete!</h2>
+      <p id="transitionSubtitle"></p>
+      <div id="transitionStats"></div>
+    </div>
+  </div>
+
+  <!-- UI Overlay: Game Over -->
+  <div id="gameOverScreen" class="overlay hidden">
+    <div class="menu-box">
+      <h2 class="game-over-title">Game Over</h2>
+      <p id="gameOverScore"></p>
+      <p id="gameOverLevel"></p>
+      <button id="btnRetry" class="menu-btn">🔄 Try Again</button>
+      <button id="btnQuitGameOver" class="menu-btn">🏠 Main Menu</button>
+    </div>
+  </div>
+
+  <!-- UI Overlay: Victory -->
+  <div id="victoryScreen" class="overlay hidden">
+    <div class="menu-box victory-box">
+      <h2 class="victory-title">🏆 All Done! 🏆</h2>
+      <p id="victorySubtitle">You conquered the Fallen Kingdom!</p>
+      <p id="victoryScore"></p>
+      <button id="btnPlayAgain" class="menu-btn">🔄 Play Again</button>
+      <button id="btnQuitVictory" class="menu-btn">🏠 Main Menu</button>
+    </div>
+  </div>
+
+  <!-- Scripts (order matters) -->
+  <script src="js/audio.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/enemy.js"></script>
+  <script src="js/level.js"></script>
+  <script src="js/combat.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
